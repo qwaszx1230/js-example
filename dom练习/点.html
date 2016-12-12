@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>画图</title>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<!--<div style="position:absolute;left: 300px;top: 300px;width: 30px;
+			height: 30px;border-radius: 50%;background-color: red;"></div>-->
+	</body>
+</html>
+<!--只写函数-->
+<script src="point.js"></script>
+<script src="huan.js"></script>
+<script src="juxing.js"></script>
+<script src="xiexian.js"></script>
+<!--调用函数-->
+<script>
+//一个点位置
+  var p1 = point(100,200)
+  console.log(p1)
+//显示一个点
+  showPoint(p1,'red',20)
+  showPoint({x:300,y:150},'blue',20)
+  console.log(Math.min(1,2))
+  console.log(Math.max(1,2))
+  huan(300,150,'black',20,60)
+//juxingq(120,300,300,400,'red')
+var p2 = point(300,150)
+juxing(p1,p2,'yellow',5)
+xiexian(p1,p2,'red',3)
+</script>   
+    
+    
+    
+    
+
+
