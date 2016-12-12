@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>4历史记录</title>
+		<style>
+			progress{
+				width: 600px;
+			}
+		</style>
+	</head>
+	<body>
+		<button onclick="history.go(-1)">后退</button>
+		<button onclick="setProgress(0)">0%进度</button>
+		<button onclick="setProgress(25)">25%进度</button>
+		<button onclick="setProgress(50)">50%进度</button>
+		<button onclick="setProgress(75)">75%进度</button>
+		<button onclick="setProgress(100)">100%进度</button>
+		<button onclick="history.go(1)">前进</button>
+		<div>
+			<progress value="0" max="100"></progress>
+		</div>
+		<!--<a href="#">跳转到页面1</a>-->
+	</body>
+</html>
+<script>
+//  查找进度元素
+    var progress = document.querySelector('progress')
+//  设置进度条的函数
+	function setProgress(value){
+//		设置进度
+		progress.value = value
+//		设置标题
+        document.title = '进度' + value
+        
+//      添加一条历史记录
+//      参数1 对象的状态
+//       参数2标题
+//        参数3 地址
+        history.pushState(value,'进度' + value, '#' + value)
+        
+	}
+//	如果历史记录发生变化   进行监听
+	window.onpopstate = function(e){
+//		e历史记录对象
+//      console.dir(e)
+        progress.value = e.state
+	}
+	
+</script>

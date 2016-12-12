@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JS倒计时</title>
+		<style type="text/css">
+			body{
+				margin: 0px;
+				color: white;
+				font-size: 13px;
+			}
+			#box{
+				width: 300px;
+				background-color: black;
+				text-align: center;
+				margin: 10px auto;
+				padding: 20px 0px;
+			}
+			input{
+				border: none;
+				width: 250px;
+				height: 50px;
+				cursor: pointer;
+				margin-top: 20px;
+				background-color: darkblue;
+				color: white;
+			}
+			span{
+				background-color: #777;
+				margin: 5px;
+				padding: 5px;
+				border: 1px solid blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<span>01</span>分钟<span>40</span>秒
+			<input type="button" value="开始倒计时"/>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	var oInput = document.querySelector('input');
+	//控制开始计时还是暂停计时的两种状态
+	var isBegin = false;
+	//保存的是当前开启的‘定时器’
+	var timer = null;
+	oInput.addEventListener('click',function(){
+		if(isBegin == false){
+			//做开始倒计时的事情
+			this.value = '暂停倒计时';
+			//开启‘定时器’一秒调用updateTime一次
+			timer = setInterval(updateTime,1000);
+			updateTime();
+		}else{
+			//做暂停倒计时的事情
+			this.value = '继续倒计时';
+			//关闭上一个‘定时器’
+			clearInterval(timer);
+		}
+		isBegin = !isBegin;
+	});
+	
+	//封装一个函数，处理计时的问题
+	function updateTime(){
+		var oSpan = document.querySelectorAll('span');
+		var totalSeconds = oSpan[0].innerHTML*60 + oSpan[1].innerHTML*1;
+		totalSeconds--;
+		//判断有没有到00？？
+		if (totalSeconds < 0) {
+			clearInterval(timer);
+			alert('倒计时结束');
+			return;
+		}
+		/*
+		//Math.floor 向下取整
+		var minute = Math.floor(totalSeconds / 60);
+		var second = totalSeconds % 60;
+		oSpan[0].innerHTML = minute < 10 ? '0' + minute : minute;
+		oSpan[1].innerHTML = second < 10 ? '0' + second : second;
+		*/
+		
+		// (/^(\d)$/,'0$1')  正则表达，选择替换
+		var minute = Math.floor(totalSeconds / 60);
+		var second = totalSeconds % 60;
+		oSpan[0].innerHTML = minute.toString().replace(/^(\d)$/,'0$1');
+		oSpan[1].innerHTML = second.toString().replace(/^(\d)$/,'0$1');
+	}
+</script>

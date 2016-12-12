@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>拖拽图片上传</title>
+		<style type="text/css">
+			main{
+				border: 1px dashed #ccc;
+				width: 600px;
+				height: 400px;
+				padding: 10px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 36px;
+				color: #ccc;
+			}
+			img{
+				width: 100px;
+			}
+			input{
+				border: none;
+				background-color: orange;
+				width: 100px;
+				height: 45px;
+				margin: 20px;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<span>拖动图片到这里</span>			
+		</main>
+		<input type="button" value="上传"/>
+	</body>
+</html>
+<script type="text/javascript">
+	//与drag、drop相关事件，需要preventDefault(),因为浏览器默认会打开拖放到页面的资源（图片）
+	
+	var oMain = document.getElementsByTagName('main')[0];
+	oMain.ondragover = function(e){
+		e.preventDefault();
+		e.dataTransfer.dropEffect = 'copy';
+		console.log('拖拽到上面了');
+	}
+	oMain.ondragenter = function(e){
+		console.log('进入到拖拽区了');
+	}
+	var files;
+	oMain.ondrop = function(e){
+		//alert('丢弃了--松开手了');
+		//阻止和清除浏览器加载你拖拽的资源的默认行为
+		e.preventDefault();
+		e.stopPropagation();
+		//获取拖拽过来的资源文件
+		files = e.dataTransfer.files;
+		//遍历文件数组
+		for (var i = 0; i <files.length; i++)
+		{
+			//判断下，你拖拽的文件是不是一张图片
+			if (files[i].type.startsWith('image')) {
+				//创建一个新的img标签接收图片
+				var oImage = document.createElement('img');
+				oImage.src = URL.createObjectURL(files[i]);
+				oMain.insertBefore(oImage,oMain.childNodes[0]);
+				//删除span标签(删不删都行，看情况)
+				if (document.querySelector('span')) {
+					oMain.removeChild(document.querySelector('span'));
+				}
+			}
+		}
+	}
+</script>
